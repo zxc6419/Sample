@@ -13,11 +13,27 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->addTaskButton, &QPushButton::clicked,
             this, &MainWindow::addTask);
+    updateStatus();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::updateStatus()
+{
+    int completedCount = 0;
+    for (auto t : tasks_) {
+        if (t->isCompleted()) {
+            completedCount++;
+        }
+    }
+
+    int todoCount = tasks_.size()-completedCount;
+    ui->statusLabel->setText(QString(tr("Status: %1 todo / %2 completed"))
+                             .arg(todoCount)
+                             .arg(completedCount));
 }
 
 void MainWindow::addTask()
@@ -37,6 +53,10 @@ void MainWindow::addTask()
         // When new task, immediately connecting
         // the *remove* signal/slot
         connect(task, &Task::removed, this, &MainWindow::removeTask);
+
+        connect(task, &Task::statusChanged, this, &MainWindow::taskStatusChanged);
+
+        updateStatus();
     }
 }
 
@@ -47,4 +67,10 @@ void MainWindow::removeTask(Task *task)
     qDebug() << task->parent()->objectName();
     task->setParent(nullptr);
     delete task;
+    updateStatus();
+}
+
+void MainWindow::taskStatusChanged(Task* /*task*/)
+{
+    updateStatus();
 }

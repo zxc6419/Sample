@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QInputDialog>
+#include <QFont>
 
 Task::Task(const QString& name, QWidget *parent) :
     QWidget(parent),
@@ -16,6 +17,8 @@ Task::Task(const QString& name, QWidget *parent) :
             [this]{
         emit removed(this);
     });
+    connect(ui->checkBox, &QCheckBox::toggled,
+            this, &Task::checked);
 }
 
 Task::~Task()
@@ -51,4 +54,12 @@ void Task::rename()
     if (ok && !value.isEmpty()) {
         setName(value);
     }
+}
+
+void Task::checked(bool checked)
+{
+    QFont font(ui->checkBox->font());
+    font.setStrikeOut(checked);
+    ui->checkBox->setFont(font);
+    emit statusChanged(this);
 }

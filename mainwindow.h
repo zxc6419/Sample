@@ -18,9 +18,12 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void updateStatus();
+
 public slots:
     void addTask();
     void removeTask(Task* task);
+    void taskStatusChanged(Task* task);
 
 private:
     Ui::MainWindow *ui;
