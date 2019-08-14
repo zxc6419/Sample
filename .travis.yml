@@ -1,0 +1,10 @@
+dist: bionic
+language: cpp
+compiler:
+  - clang
+  - gcc
+before_install:
+  - sudo apt-get install qtbase5-dev qttools5-dev qt5-default
+script:
+  - qmake
+  - make
