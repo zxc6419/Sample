@@ -14,7 +14,7 @@ build_script:
   - qmake
   - nmake
 artifacts:
-  - path: "C:\projects\sample"
+  - path: release
     name: test_sample  
 deploy:
   provider: GitHub
