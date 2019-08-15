@@ -17,3 +17,5 @@ script:
   api_key: $GITHUB_OAUTH_TOKEN
   file: release
   skip_cleanup: true
+  
+  
