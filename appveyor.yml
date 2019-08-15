@@ -14,9 +14,6 @@ build_script:
   - qmake
   - nmake
   
- artifacts:
-  - path: bin
-    name: Sample
 deploy:
   provider: GitHub
   auth_token: $(GITHUB_OAUTH_TOKEN)

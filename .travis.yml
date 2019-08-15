@@ -6,7 +6,7 @@ compiler:
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: "FILE TO UPLOAD"
+  file: .
   skip_cleanup: true
   on:
     tags: true
