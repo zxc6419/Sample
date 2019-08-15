@@ -3,8 +3,16 @@ language: cpp
 compiler:
   - clang
   - gcc
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  file: "FILE TO UPLOAD"
+  skip_cleanup: true
+  on:
+    tags: true
 before_install:
   - sudo apt-get install qtbase5-dev qttools5-dev qt5-default
 script:
+  - export QT_SELECT=qt5
   - qmake
   - make
