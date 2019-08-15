@@ -13,7 +13,9 @@ build_script:
   - set PATH=%PATH%;%QTDIR%\bin;
   - qmake
   - nmake
-  
+artifacts:
+  - path: .
+    name: test_sample  
 deploy:
   provider: GitHub
   auth_token: $(GITHUB_OAUTH_TOKEN)
