@@ -1,16 +1,33 @@
 dist: bionic
 language: cpp
-compiler:
-  - clang
-  - gcc
+services:
+  - docker
+ 
+matrix:
+  include:
+    - os: linux
+      env: TARGET=system-qt5-linux
+      addons:
+        apt:
+          packages:
+          - qtbase5-dev
+          - qttools5-dev
+          
+    - os: windows
+      env: TARGET=custom-qt4-windows
 
 
-before_install:
-  - sudo apt-get install qtbase5-dev qttools5-dev qt5-default
+# before_install:
+#   - sudo apt-get install qtbase5-dev qttools5-dev qt5-default
+# script:
+#   - export QT_SELECT=qt5
+#   - qmake
+#   - make
+
 script:
-  - export QT_SELECT=qt5
-  - qmake
-  - make
+  if [[$TARGET == "system-qt5-linux"]]; then export QT_SELECT=qt5 && qmake && make;
+  elif [[ $TARGET == "custom-qt4-windows" ]]; then qmake -version;
+  fi
   
  deploy:
   provider: releases
